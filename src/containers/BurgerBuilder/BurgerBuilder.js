@@ -22,13 +22,6 @@ class BurgerBuilder extends Component {
 
     componentDidMount() {
         console.log(this.props);
-        axios.get('/ingredients.json')
-            .then(response => {
-                this.setState({ ingredients: response.data })
-            })
-            .catch(error => {
-                this.setState({ error: true })
-            })
     }
 
     updatePurchaseState (ingredients) {
@@ -71,10 +64,6 @@ class BurgerBuilder extends Component {
                 price={this.props.price}
                 purchaseCancelled={this.purchaseCancelHandler}
                 purchaseContinued={this.purchaseContinueHandler} />
-        }
-
-        if (this.state.loading) {
-            orderSummary = <Spinner/>
         }
 
         let burger = this.state.error ?

@@ -6,7 +6,7 @@ export {
 } from './burgerBuilder';
 
 export {
-    purchaseBurgerStart,
+    purchaseBurger,
     purchaseBurgerSuccess,
     purchaseBurgerFail
 } from './order';

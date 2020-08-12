@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import Button from '../../../components/UI/Button/Button';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import classes from './ContactData.css';
-import Input from '../../../components/UI/Input/Input';
 import axios from '../../../axios-orders';
-import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
-import * as actions from '../../../store/actions/index';
+import Input from '../../../components/UI/Input/Input';
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler'
+import * as actions from '../../../store/actions';
 
 class ContactData extends Component {
     state = {
@@ -99,12 +99,11 @@ class ContactData extends Component {
 
     orderHandler = ( event ) => {
         event.preventDefault();
-
+  
         const formData = {};
         for (let formElementIdentifier in this.state.orderForm) {
             formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value;
         }
-
         const order = {
             ingredients: this.props.ings,
             price: this.props.price,
@@ -112,14 +111,15 @@ class ContactData extends Component {
         }
 
         this.props.onOrderBurger(order, this.props.token);
-    };
+        
+    }
 
     checkValidity(value, rules) {
         let isValid = true;
         if (!rules) {
             return true;
         }
-
+        
         if (rules.required) {
             isValid = value.trim() !== '' && isValid;
         }
@@ -149,14 +149,14 @@ class ContactData extends Component {
         const updatedOrderForm = {
             ...this.state.orderForm
         };
-        const updatedFormElement = {
+        const updatedFormElement = { 
             ...updatedOrderForm[inputIdentifier]
         };
         updatedFormElement.value = event.target.value;
         updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
         updatedFormElement.touched = true;
         updatedOrderForm[inputIdentifier] = updatedFormElement;
-
+        
         let formIsValid = true;
         for (let inputIdentifier in updatedOrderForm) {
             formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
@@ -175,7 +175,7 @@ class ContactData extends Component {
         let form = (
             <form onSubmit={this.orderHandler}>
                 {formElementsArray.map(formElement => (
-                    <Input
+                    <Input 
                         key={formElement.id}
                         elementType={formElement.config.elementType}
                         elementConfig={formElement.config.elementConfig}
@@ -206,19 +206,13 @@ const mapStateToProps = state => {
         price: state.burgerBuilder.totalPrice,
         loading: state.order.loading,
         token: state.auth.token
-    };
+    }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onOrderBurger:
-            (orderData, token) => dispatch(actions.purchaseBurger(orderData, token))
-    }
+        onOrderBurger: (orderData, token) => dispatch(actions.purchaseBurger(orderData, token))
+    };
 };
 
-export default connect
-(
-    mapStateToProps,
-    mapDispatchToProps
-)
-(withErrorHandler(ContactData, axios));
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axios));

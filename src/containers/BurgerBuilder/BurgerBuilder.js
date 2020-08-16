@@ -12,10 +12,6 @@ import * as actions from '../../store/actions';
 import axios from '../../axios-orders';
 
 class BurgerBuilder extends Component {
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {...}
-    // }
     state = {
         purchasing: false
     }
@@ -84,7 +80,7 @@ class BurgerBuilder extends Component {
                 purchaseCancelled={this.purchaseCancelHandler}
                 purchaseContinued={this.purchaseContinueHandler} />;
         }
-        // {salad: true, meat: false, ...}
+
         return (
             <Aux>
                 <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
@@ -107,11 +103,16 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onIngredientAdded: (ingName) => dispatch(actions.addIngredient(ingName)),
-        onIngredientRemoved: (ingName) => dispatch(actions.removeIngredient(ingName)),
-        onInitIngredients: () => dispatch(actions.initIngredients()),
-        onInitPurchase: () => dispatch(actions.purchaseInit()),
-        onSetAuthRedirectPath: (path) => dispatch(actions.setAuthRedirectPath(path))
+        onIngredientAdded:
+            (ingName) => dispatch(actions.addIngredient(ingName)),
+        onIngredientRemoved:
+            (ingName) => dispatch(actions.removeIngredient(ingName)),
+        onInitIngredients:
+            () => dispatch(actions.initIngredients()),
+        onInitPurchase:
+            () => dispatch(actions.purchaseInit()),
+        onSetAuthRedirectPath:
+            (path) => dispatch(actions.setAuthRedirectPath(path))
     }
 }
 
